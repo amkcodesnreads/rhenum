@@ -51,18 +51,60 @@ class _SugarState extends State<Sugar> {
       body: Center(child: Text('Sugar')),
       floatingActionButton: currentHeight < 500
           ? FloatingActionButton(
-              onPressed: () async {},
+              onPressed: () async {
+                _showDialog();
+              },
               shape: const CircleBorder(),
               child: const Icon(Icons.add),
             )
           : FloatingActionButton.large(
-              onPressed: () async {},
+              onPressed: () async {
+                _showDialog();
+              },
               shape: const CircleBorder(),
               child: const Icon(Icons.add),
             ),
       floatingActionButtonLocation: currentWidth < 450
           ? FloatingActionButtonLocation.centerFloat
           : FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+            backgroundColor: Color(0xFF2d2e32),
+            child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Date"),
+                    TextField(),
+                    TextField(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text("OK"),
+                        )
+                      ],
+                    )
+                  ],
+                )));
+      },
     );
   }
 }

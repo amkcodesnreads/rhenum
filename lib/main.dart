@@ -58,14 +58,6 @@ class _Rhenum extends State<Rhenum> {
           const BP(),
           const Sugar(),
         ][currentPageIndex],
-        drawer: SizedBox(
-          width: 280,
-          child: Drawer(
-            child: Column(
-              children: <Widget>[],
-            ),
-          ),
-        ),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) =>
               setState(() => currentPageIndex = index),
