@@ -21,11 +21,7 @@ class _Rhenum extends State<Rhenum> {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         useMaterial3: true,
-        textTheme: GoogleFonts.robotoTextTheme().copyWith(
-          headline4: const TextStyle(color: Color(0xFFc4c7c5)),
-          headline3: const TextStyle(color: Color(0xFFc4c7c5)),
-          // bodyMedium: const TextStyle(color: Color(0xFFc4c7c5))
-        ),
+        textTheme: GoogleFonts.openSansTextTheme(),
         scaffoldBackgroundColor: const Color(0xFF1f1f1f),
         appBarTheme: AppBarTheme(
           backgroundColor: const Color(0xFF1f1f1f),

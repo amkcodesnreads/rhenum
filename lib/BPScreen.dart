@@ -37,7 +37,10 @@ class _BPState extends State<BP> {
           onPressed: () {
             scaffoldKey.currentState?.openDrawer();
           },
-          icon: const Icon(Icons.more_vert),
+          icon: const Icon(
+            Icons.more_vert,
+            color: Color(0xFFc5c7c4),
+          ),
         ),
       ),
       drawer: SizedBox(
