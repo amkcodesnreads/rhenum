@@ -71,6 +71,8 @@ class _SugarState extends State<Sugar> {
   }
 
   void _showDialog() {
+    final currentWidth = MediaQuery.of(context).size.width;
+    final currentHeight = MediaQuery.of(context).size.height;
     // flutter defined function
     showDialog(
       context: context,
@@ -78,32 +80,39 @@ class _SugarState extends State<Sugar> {
         // return object of type Dialog
         return Dialog(
             backgroundColor: Color(0xFF2d2e32),
-            child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Date"),
-                    TextField(),
-                    TextField(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Cancel"),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text("OK"),
-                        )
-                      ],
-                    )
-                  ],
-                )));
+            child: Container(
+              height: currentHeight * 0.4,
+              width: currentWidth > 280 ? 400 : currentWidth * 0.9,
+              child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: ,
+                    children: [
+                      const Text(
+                        "New Sugar Record",
+                      ),
+                      const Text("Date"),
+                      const TextField(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text("OK"),
+                          )
+                        ],
+                      ),
+                    ],
+                  )),
+            ));
       },
     );
   }

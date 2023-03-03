@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'BPScreen.dart';
-import 'Sscreen.dart';
+import 'bp_screen.dart';
+import 's_screen.dart';
 
 void main() async => runApp(const Rhenum());
 
