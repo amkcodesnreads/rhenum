@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 's_item.dart';
+
 class Sugar extends StatefulWidget {
   const Sugar({Key? key}) : super(key: key);
 
@@ -10,6 +12,8 @@ class Sugar extends StatefulWidget {
 
 class _SugarState extends State<Sugar> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  DateTime date = DateTime.now();
+  TextEditingController sugar = TextEditingController();
 
   double _getDrawerWidth() {
     double width = MediaQuery.of(context).size.width * 3 / 4;
@@ -54,17 +58,19 @@ class _SugarState extends State<Sugar> {
               onPressed: () async {
                 _showDialog();
               },
-              shape: const CircleBorder(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
               child: const Icon(Icons.add),
             )
           : FloatingActionButton.large(
               onPressed: () async {
                 _showDialog();
               },
-              shape: const CircleBorder(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
               child: const Icon(Icons.add),
             ),
-      floatingActionButtonLocation: currentWidth < 450
+      floatingActionButtonLocation: currentWidth < 500
           ? FloatingActionButtonLocation.centerFloat
           : FloatingActionButtonLocation.endFloat,
     );

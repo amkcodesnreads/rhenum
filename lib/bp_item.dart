@@ -1,9 +1,9 @@
-class bpItem {
+class BpItem {
   DateTime date = DateTime.now();
   int? diastolic;
   int? systolic;
 
-  bpItem(this.systolic, this.diastolic, {DateTime? date}) {
+  BpItem(this.systolic, this.diastolic, {DateTime? date}) {
     if (date != null) {
       this.date = date;
     }

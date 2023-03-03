@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'bp_item.dart';
+
 class BP extends StatefulWidget {
   const BP({Key? key}) : super(key: key);
 
@@ -10,6 +12,9 @@ class BP extends StatefulWidget {
 
 class _BPState extends State<BP> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  DateTime date = DateTime.now();
+  TextEditingController diastolicController = TextEditingController();
+  TextEditingController systolicController = TextEditingController();
 
   double _getDrawerWidth() {
     double width = MediaQuery.of(context).size.width * 3 / 4;
@@ -57,17 +62,19 @@ class _BPState extends State<BP> {
               onPressed: () async {
                 _showDialog();
               },
-              shape: const CircleBorder(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
               child: const Icon(Icons.add),
             )
           : FloatingActionButton.large(
               onPressed: () async {
                 _showDialog();
               },
-              shape: const CircleBorder(),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
               child: const Icon(Icons.add),
             ),
-      floatingActionButtonLocation: currentWidth < 450
+      floatingActionButtonLocation: currentWidth < 500
           ? FloatingActionButtonLocation.centerFloat
           : FloatingActionButtonLocation.endFloat,
     );
