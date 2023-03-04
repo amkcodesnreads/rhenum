@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import "package:intl/intl.dart" show DateFormat;
 
 import 'bp_item.dart';
 
@@ -11,6 +12,7 @@ class BP extends StatefulWidget {
 }
 
 class _BPState extends State<BP> {
+  final formKey = GlobalKey<FormState>();
   var scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime date = DateTime.now();
   TextEditingController diastolicController = TextEditingController();
@@ -22,6 +24,18 @@ class _BPState extends State<BP> {
       return 280;
     } else {
       return width;
+    }
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime.now().subtract(const Duration(days: 7)),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != date) {
+      setState(() => date = picked);
     }
   }
 
@@ -90,39 +104,114 @@ class _BPState extends State<BP> {
         // return object of type Dialog
         return Dialog(
             backgroundColor: Color(0xFF2d2e32),
-            child: Container(
-              height: currentHeight * 0.4,
-              width: currentWidth > 280 ? 400 : currentWidth * 0.9,
-              child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: ,
-                    children: [
-                      const Text(
-                        "New Blood Pressure Record",
-                      ),
-                      const Text("Date"),
-                      const TextField(),
-                      const TextField(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  // height: currentHeight * 0.4,
+                  width: currentWidth > 280 ? 400 : currentWidth * 0.9,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text("Cancel"),
+                          Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    DateFormat("d/M/y").format(date),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.edit),
+                                  iconSize: 30.0,
+                                  tooltip: "Edit date",
+                                  onPressed: () => _selectDate(context),
+                                ),
+                              ],
+                            ),
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text("OK"),
-                          )
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: TextFormField(
+                              validator: (value) => value == null || value == ""
+                                  ? "Enter a value"
+                                  : null,
+                              controller: systolicController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                ),
+                                hintText: 'Systolic (in mmHg)',
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: TextFormField(
+                              validator: (value) => value == null || value == ""
+                                  ? "Enter a value"
+                                  : null,
+                              controller: diastolicController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                ),
+                                hintText: 'Diastolic (in mmHg)',
+                              ),
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel')),
+                                  TextButton(
+                                      onPressed: () {
+                                        if (formKey.currentState != null &&
+                                            formKey.currentState!.validate()) {
+                                          Navigator.of(context).pop(BpItem(
+                                            int.parse(systolicController.text),
+                                            int.parse(diastolicController.text),
+                                            date: date,
+                                          ));
+                                        }
+                                      },
+                                      child: Text('OK'))
+                                ],
+                              ))
                         ],
                       ),
-                    ],
-                  )),
+                    ),
+                  ),
+                ),
+              ],
             ));
       },
     );
