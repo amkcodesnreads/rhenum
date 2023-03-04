@@ -24,6 +24,9 @@ class _Rhenum extends State<Rhenum> {
         textTheme: GoogleFonts.openSansTextTheme().copyWith(
             displayMedium: const TextStyle(
                 color: Color(0xFFc4c7c5), fontWeight: FontWeight.w400)),
+        // labelLarge : const TextStyle(
+        //   color: Color(0xFFc4c7c5),
+        // ),
         scaffoldBackgroundColor: const Color(0xFF1f1f1f),
         appBarTheme: AppBarTheme(
           backgroundColor: const Color(0xFF1f1f1f),

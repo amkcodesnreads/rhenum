@@ -3,7 +3,7 @@ class BpItem {
   int? diastolic;
   int? systolic;
 
-  BpItem(this.systolic, this.diastolic, {DateTime? date}) {
+  BpItem(this.systolic, this.diastolic, DateTime? date) {
     if (date != null) {
       this.date = date;
     }
