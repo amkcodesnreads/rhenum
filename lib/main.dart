@@ -50,7 +50,7 @@ class _Rhenum extends State<Rhenum> {
         useMaterial3: true,
         brightness: Brightness.dark,
         // useMaterial3: true,
-        colorSchemeSeed: const Color(0xFF2d2e32),
+        // colorSchemeSeed: const Color(0xFF2d2e32),
         textTheme: GoogleFonts.openSansTextTheme().copyWith(
             displayMedium: const TextStyle(
                 color: Color(0xFFc4c7c5), fontWeight: FontWeight.w400)),
