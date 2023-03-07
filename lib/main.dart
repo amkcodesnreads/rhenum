@@ -7,7 +7,6 @@ import 's_screen.dart';
 import "package:intl/intl.dart" show DateFormat;
 
 import 'bp_item.dart';
-import 'dart:math';
 import 's_item.dart';
 
 void main() async => runApp(const MaterialApp(home: Rhenum()));
@@ -47,8 +46,11 @@ class _Rhenum extends State<Rhenum> {
     late double currentWidth = MediaQuery.of(context).size.width;
     late double currentHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.dark,
+        // useMaterial3: true,
+        colorSchemeSeed: const Color(0xFF2d2e32),
         textTheme: GoogleFonts.openSansTextTheme().copyWith(
             displayMedium: const TextStyle(
                 color: Color(0xFFc4c7c5), fontWeight: FontWeight.w400)),
@@ -139,7 +141,7 @@ class _Rhenum extends State<Rhenum> {
                   currentPageIndex == 0 ? _showBPDialog() : _showSDialog();
                 },
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
+                    borderRadius: BorderRadius.circular(20.0)),
                 child: const Icon(Icons.add),
               )
             : FloatingActionButton.large(
@@ -147,7 +149,7 @@ class _Rhenum extends State<Rhenum> {
                   currentPageIndex == 0 ? _showBPDialog() : _showSDialog();
                 },
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
+                    borderRadius: BorderRadius.circular(20.0)),
                 child: const Icon(Icons.add),
               ),
         floatingActionButtonLocation: currentWidth < 500
@@ -165,97 +167,119 @@ class _Rhenum extends State<Rhenum> {
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
-        return Dialog(
-            backgroundColor: Color(0xFF2d2e32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  // height: currentHeight * 0.35,
-                  width: currentWidth > 280 ? 400 : currentWidth * 0.9,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    DateFormat("d/M/y").format(date),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayMedium,
-                                  ),
+        return AlertDialog(
+            backgroundColor: const Color(0xFF323337),
+            title: const Text("New Sugar Record", style: TextStyle(color: Color(0xFFc4c7c5), fontSize: 13)),
+            actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Cancel', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)),
+                TextButton(
+                    onPressed: () {
+                      if (formKey.currentState != null &&
+                          formKey.currentState!.validate()) {
+                        Navigator.of(context).pop(SItem(
+                          int.parse(sugarController.text),
+                          date: date,
+                        ));
+                        setState(() => sugarItems.add(SItem(
+                              int.parse(sugarController.text),
+                            )));
+                      }
+                    },
+                    child: Text('OK', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)
+                )
+              ],
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 24.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  DateFormat("d/M/y").format(date),
+                                    style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400))
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  iconSize: 30.0,
-                                  tooltip: "Edit date",
-                                  onPressed: () => _selectDate(context),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: TextFormField(
-                              validator: (value) => value == null || value == ""
-                                  ? "Enter a value"
-                                  : null,
-                              controller: sugarController,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                                hintText: 'Sugar (in Hz)',
                               ),
-                            ),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                iconSize: 30.0,
+                                tooltip: "Edit date",
+                                color: const Color(0xFFc4c7c5),
+                                onPressed: () => _selectDate(context),
+                              ),
+                            ],
                           ),
-                          Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Cancel')),
-                                  TextButton(
-                                      onPressed: () {
-                                        if (formKey.currentState != null &&
-                                            formKey.currentState!.validate()) {
-                                          Navigator.of(context).pop(SItem(
-                                            int.parse(sugarController.text),
-                                            date: date,
-                                          ));
-                                          setState(() => sugarItems.add(SItem(
-                                                int.parse(sugarController.text),
-                                              )));
-                                        }
-                                      },
-                                      child: Text('OK'))
-                                ],
-                              ))
-                        ],
-                      ),
+                        ),
+                        TextFormField(
+                          validator: (value) => value == null || value == ""
+                              ? "Enter a value"
+                              : null,
+                          controller: sugarController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            filled: true,
+                            fillColor: Color(0xFF454746),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                // color: Color(0xFFc4c7c5),
+                                width: 0.0,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+
+                            hintText: 'Sugar (in Hz)',
+                            hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                          ),
+                        ),
+                        // Padding(
+                        //     padding: const EdgeInsets.all(16),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.end,
+                        //       children: [
+                        //         TextButton(
+                        //             onPressed: () {
+                        //               Navigator.of(context).pop();
+                        //             },
+                        //             child: Text('Cancel')),
+                        //         TextButton(
+                        //             onPressed: () {
+                        //               if (formKey.currentState != null &&
+                        //                   formKey.currentState!.validate()) {
+                        //                 Navigator.of(context).pop(SItem(
+                        //                   int.parse(sugarController.text),
+                        //                   date: date,
+                        //                 ));
+                        //                 setState(() => sugarItems.add(SItem(
+                        //                       int.parse(sugarController.text),
+                        //                     )));
+                        //               }
+                        //             },
+                        //             child: Text('OK'))
+                        //       ],
+                        //     ))
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ));
       },
     );
@@ -269,122 +293,124 @@ class _Rhenum extends State<Rhenum> {
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
-        return Dialog(
-            backgroundColor: Color(0xFF2d2e32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  // height: currentHeight * 0.4,
-                  width: currentWidth > 280 ? 420 : currentWidth * 0.96,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
+        return AlertDialog(
+            backgroundColor: const Color(0xFF323337),
+            title: const Text("New BP Record", style: TextStyle(color: Color(0xFFc4c7c5), fontSize: 13)),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)),
+              TextButton(
+                  onPressed: () {
+                    if (formKey.currentState != null &&
+                      formKey.currentState!.validate()) {
+                        Navigator.of(context).pop(BpItem(
+                         int.parse(systolicController.text),
+                         int.parse(diastolicController.text),
+                         date,
+                        ));
+                      setState(() => bpItems.add(BpItem(
+                      int.parse(
+                       systolicController.text),
+                      int.parse(
+                        diastolicController.text),
+                        date)));
+                      }},
+                  child: Text('OK', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)),
+            ],
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 24.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
                                     DateFormat("d/M/y").format(date),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayMedium,
-                                  ),
+                                    style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400))
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  iconSize: 30.0,
-                                  tooltip: "Edit date",
-                                  onPressed: () => _selectDate(context),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: TextFormField(
-                              validator: (value) => value == null || value == ""
-                                  ? "Enter a value"
-                                  : null,
-                              controller: systolicController,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                                hintText: 'Systolic (in mmHg)',
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: TextFormField(
-                              validator: (value) => value == null || value == ""
-                                  ? "Enter a value"
-                                  : null,
-                              controller: diastolicController,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                                hintText: 'Diastolic (in mmHg)',
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                iconSize: 30.0,
+                                tooltip: "Edit date",
+                                color: const Color(0xFFc4c7c5),
+                                onPressed: () => _selectDate(context),
                               ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: TextFormField(
+                            validator: (value) => value == null || value == ""
+                                ? "Enter a value"
+                                : null,
+                            controller: systolicController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xFF454746),
+                              border: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(width: 3, color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),
+                              hintText: 'Systolic (in mmHg)',
+                                hintStyle: TextStyle(color: Color(0xFFc4c7c5))
                             ),
                           ),
-                          Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Cancel')),
-                                  TextButton(
-                                      onPressed: () {
-                                        if (formKey.currentState != null &&
-                                            formKey.currentState!.validate()) {
-                                          Navigator.of(context).pop(BpItem(
-                                            int.parse(systolicController.text),
-                                            int.parse(diastolicController.text),
-                                            date,
-                                          ));
-                                          setState(() => bpItems.add(BpItem(
-                                              int.parse(
-                                                  systolicController.text),
-                                              int.parse(
-                                                  diastolicController.text),
-                                              date)));
-                                        }
-                                      },
-                                      child: Text('OK'))
-                                ],
-                              ))
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: TextFormField(
+                            validator: (value) => value == null || value == ""
+                                ? "Enter a value"
+                                : null,
+                            controller: diastolicController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xFF454746),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFc4c7c5),
+                                  width: 2.0,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                              ),
+                              hintText: 'Diastolic (in mmHg)',
+                                hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                            ),
+                          ),
+                        ),
+
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ));
       },
     );
