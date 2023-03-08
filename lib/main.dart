@@ -47,17 +47,15 @@ class _Rhenum extends State<Rhenum> {
     late double currentHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
       theme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        brightness: Brightness.light,
-        useMaterial3: true,
-          textTheme: GoogleFonts.openSansTextTheme()
-      ),
+          colorSchemeSeed: Colors.blue,
+          brightness: Brightness.light,
+          useMaterial3: true,
+          textTheme: GoogleFonts.openSansTextTheme().copyWith()),
       darkTheme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        brightness: Brightness.dark,
-        useMaterial3: true,
-          textTheme: GoogleFonts.openSansTextTheme()
-      ),
+          colorSchemeSeed: Colors.blue,
+          brightness: Brightness.dark,
+          useMaterial3: true,
+          textTheme: GoogleFonts.openSansTextTheme()),
       // theme: ThemeData(
       //   useMaterial3: true,
       //   brightness: Brightness.dark,
@@ -136,7 +134,7 @@ class _Rhenum extends State<Rhenum> {
             },
             icon: const Icon(
               Icons.more_vert,
-              color: Color(0xFFc5c7c4),
+              // color: Color(0xFFc5c7c4),
             ),
           ),
         ),
@@ -146,83 +144,83 @@ class _Rhenum extends State<Rhenum> {
               : MediaQuery.of(context).size.width * 3 / 4,
           child: Drawer(
             child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    // Use drawer width to determine drawer header size
-                    height: MediaQuery.of(context).size.width * 3 / 4 > 280
-                        ? 280 * 1.1
-                        : MediaQuery.of(context).size.width * 3 / 4 *1.1,
-                    child: DrawerHeader(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          // Profile picture of user
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.width * 3 / 4 > 280
-                                  ? 280 / 2
-                                  : MediaQuery.of(context).size.width * 3 / 4 / 2,
-                              width: MediaQuery.of(context).size.width * 3 / 4 > 280
-                                  ? 280 / 2
-                                  : MediaQuery.of(context).size.width * 3 / 4 / 2,
-                              child: const FlutterLogo(
-                                // size: 300,
-                                textColor: Colors.blue,
-                                style: FlutterLogoStyle.stacked,
-                              ),
+              children: <Widget>[
+                SizedBox(
+                  // Use drawer width to determine drawer header size
+                  height: MediaQuery.of(context).size.width * 3 / 4 > 280
+                      ? 280 * 1.1
+                      : MediaQuery.of(context).size.width * 3 / 4 * 1.1,
+                  child: DrawerHeader(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        // Profile picture of user
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.width * 3 / 4 >
+                                    280
+                                ? 280 / 2
+                                : MediaQuery.of(context).size.width * 3 / 4 / 2,
+                            width: MediaQuery.of(context).size.width * 3 / 4 >
+                                    280
+                                ? 280 / 2
+                                : MediaQuery.of(context).size.width * 3 / 4 / 2,
+                            child: const FlutterLogo(
+                              // size: 300,
+                              // textColor: Colors.green,
+                              style: FlutterLogoStyle.stacked,
                             ),
                           ),
-                          // Name of user
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              "Aadarsh",
-                              style: Theme.of(context).textTheme.displaySmall,
-                            ),
+                        ),
+                        // Name of user
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            "Aadarsh",
+                            style: Theme.of(context).textTheme.displaySmall,
                           ),
-                          // Email ID of user
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              "aadarshmadankollan@gmail.com",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                        // Email ID of user
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            "aadarshmadankollan@gmail.com",
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  // For logging out
-                  ListTile(
-                    leading: const Icon(Icons.logout),
-                    title: const Text("Log out"),
-                    onTap: () async {
-
-                    },
-                  ),
-                  // For showing the log file
-                  ListTile(
-                    leading: const Icon(Icons.insert_drive_file_outlined),
-                    title: const Text("Access file"),
-                    onTap: () async {},
-                  ),
-                  // For opening the support page
-                  ListTile(
+                ),
+                // For logging out
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text("Log out"),
+                  onTap: () async {},
+                ),
+                // For showing the log file
+                ListTile(
+                  leading: const Icon(Icons.insert_drive_file_outlined),
+                  title: const Text("Access file"),
+                  onTap: () async {},
+                ),
+                // For opening the support page
+                ListTile(
                     leading: const Icon(Icons.contact_support_outlined),
                     title: const Text("Get support"),
-                    onTap: () async {}
-                  ),
-
-                ],
+                    onTap: () async {}),
+              ],
             ),
           ),
         ),
         floatingActionButton: currentHeight < 500
             ? FloatingActionButton(
                 onPressed: () async {
-                  currentPageIndex == 0 ? _showBPDialog() : _showSDialog();
+                  currentPageIndex == 0
+                      ? showDialog(context: context, builder: (BuildContext context) => bpDialog())
+                      : showDialog(context: context, builder: (BuildContext context) => sDialog());
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
@@ -230,7 +228,9 @@ class _Rhenum extends State<Rhenum> {
               )
             : FloatingActionButton.large(
                 onPressed: () async {
-                  currentPageIndex == 0 ? _showBPDialog() : _showSDialog();
+                  currentPageIndex == 0
+                      ? showDialog(context: context, builder: (BuildContext context) => bpDialog())
+                      : showDialog(context: context, builder: (BuildContext context) => sDialog());
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
@@ -243,49 +243,44 @@ class _Rhenum extends State<Rhenum> {
     );
   }
 
-  void _showSDialog() {
-    final currentWidth = MediaQuery.of(context).size.width;
-    final currentHeight = MediaQuery.of(context).size.height;
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
+  Widget sDialog() {
         // return object of type Dialog
         return AlertDialog(
-            backgroundColor: const Color(0xFF323337),
-            title: Text("New Sugar Record", style: Theme.of(context).textTheme.labelLarge),
+            // backgroundColor: const Color(0xFF323337),
+            title: Text("New Sugar Record",
+                style: Theme.of(context).textTheme.labelLarge),
             actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      sugarController.clear();
-                    },
-                    child: Text('Cancel',
-                      // style: GoogleFonts.openSans(
-                        // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
-
-                    )),
-                TextButton(
-                    onPressed: () {
-                      if (formKey.currentState != null &&
-                          formKey.currentState!.validate()) {
-                          Navigator.of(context).pop(SItem(
-                          int.parse(sugarController.text),
-                          date: date,
-                        ));
-                        setState(() => sugarItems.add(SItem(
-                              int.parse(sugarController.text),
-                            )));
-                      }
-                      sugarController.clear();
-                    },
-                    child: Text('OK',
-                      // style: GoogleFonts.openSans(
-                        // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    sugarController.clear();
+                  },
+                  child: Text(
+                    'Cancel',
+                    // style: GoogleFonts.openSans(
+                    // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+                  )),
+              TextButton(
+                  onPressed: () {
+                    if (formKey.currentState != null &&
+                        formKey.currentState!.validate()) {
+                      Navigator.of(context).pop(SItem(
+                        int.parse(sugarController.text),
+                        date: date,
+                      ));
+                      setState(() => sugarItems.add(SItem(
+                            int.parse(sugarController.text),
+                          )));
+                    }
+                    sugarController.clear();
+                  },
+                  child: Text(
+                    'OK',
+                    // style: GoogleFonts.openSans(
+                    // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
                     // ),
-                  )
-                )
-              ],
+                  ))
+            ],
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -302,20 +297,21 @@ class _Rhenum extends State<Rhenum> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  DateFormat("d/M/y").format(date),
+                                child: Text(DateFormat("d/M/y").format(date),
                                     // style: GoogleFonts.openSans(
                                     //     // textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400)
                                     // )
-                                    style: Theme.of(context).textTheme.displaySmall
-                                ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.edit),
                                 iconSize: 30.0,
                                 tooltip: "Edit date",
-                                color: const Color(0xFFc4c7c5),
-                                onPressed: () async  => await _selectDate(context),
+                                // color: const Color(0xFFc4c7c5),
+                                onPressed: () async =>
+                                    await _selectDate(context),
                               ),
                             ],
                           ),
@@ -332,7 +328,7 @@ class _Rhenum extends State<Rhenum> {
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
                             filled: true,
-                            fillColor: Color(0xFF454746),
+                            // fillColor: Color(0xFF454746),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
                                 // color: Color(0xFFc4c7c5),
@@ -378,24 +374,14 @@ class _Rhenum extends State<Rhenum> {
                 ],
               ),
             ));
-      },
-    );
   }
 
-  _showBPDialog() {
-    final currentWidth = MediaQuery.of(context).size.width;
-    final currentHeight = MediaQuery.of(context).size.height;
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
+  Widget bpDialog() {
         return AlertDialog(
-            backgroundColor: const Color(0xFF323337),
+            // backgroundColor: const Color(0xFF323337),
             title: Text("New BP Record",
                 // style: TextStyle(color: Color(0xFFc4c7c5), fontSize: 13)
-                style: Theme.of(context).textTheme.labelLarge
-            ),
+                style: Theme.of(context).textTheme.labelLarge),
             actions: <Widget>[
               TextButton(
                   onPressed: () {
@@ -403,34 +389,34 @@ class _Rhenum extends State<Rhenum> {
                     systolicController.clear();
                     diastolicController.clear();
                   },
-                  child: Text('Cancel',
+                  child: Text(
+                    'Cancel',
                     // style: GoogleFonts.openSans(
-                      // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
-                  // )
+                    // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+                    // )
                   )),
               TextButton(
                   onPressed: () {
                     if (formKey.currentState != null &&
-                      formKey.currentState!.validate()) {
-                        Navigator.of(context).pop(BpItem(
-                         int.parse(systolicController.text),
-                         int.parse(diastolicController.text),
-                         date,
-                        ));
+                        formKey.currentState!.validate()) {
+                      Navigator.of(context).pop(BpItem(
+                        int.parse(systolicController.text),
+                        int.parse(diastolicController.text),
+                        date,
+                      ));
                       setState(() => bpItems.add(BpItem(
-                      int.parse(
-                       systolicController.text),
-                      int.parse(
-                        diastolicController.text),
-                        date)));
-                      }
+                          int.parse(systolicController.text),
+                          int.parse(diastolicController.text),
+                          date)));
+                    }
                     systolicController.clear();
                     diastolicController.clear();
-                    },
-                  child: Text('OK',
+                  },
+                  child: Text(
+                    'OK',
                     // style: GoogleFonts.openSans(
-                      // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
-                  // ),
+                    // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+                    // ),
                   )),
             ],
             content: SingleChildScrollView(
@@ -449,19 +435,19 @@ class _Rhenum extends State<Rhenum> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                    DateFormat("d/M/y").format(date),
+                                child: Text(DateFormat("d/M/y").format(date),
                                     // style: GoogleFonts.openSans(
                                     //     // textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400)
                                     // )
-                                    style: Theme.of(context).textTheme.displaySmall
-                                ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.edit),
                                 iconSize: 30.0,
                                 tooltip: "Edit date",
-                                color: const Color(0xFFc4c7c5),
+                                // color: const Color(0xFFc4c7c5),
                                 onPressed: () => _selectDate(context),
                               ),
                             ],
@@ -480,16 +466,16 @@ class _Rhenum extends State<Rhenum> {
                             ],
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xFF454746),
+                              filled: true,
+                              // fillColor: Color(0xFF454746),
                               border: OutlineInputBorder(
                                 borderSide:
-                                BorderSide(width: 3, color: Colors.white),
+                                    BorderSide(width: 3, color: Colors.white),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               hintText: 'Systolic (in mmHg)',
-                                // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                              // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
                             ),
                           ),
                         ),
@@ -506,8 +492,8 @@ class _Rhenum extends State<Rhenum> {
                             ],
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xFF454746),
+                              filled: true,
+                              // fillColor: Color(0xFF454746),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color(0xFFc4c7c5),
@@ -517,18 +503,15 @@ class _Rhenum extends State<Rhenum> {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               hintText: 'Diastolic (in mmHg)',
-                                // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                              // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
                 ],
               ),
             ));
-      },
-    );
   }
 }
