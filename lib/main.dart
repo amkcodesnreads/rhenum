@@ -29,7 +29,7 @@ class _Rhenum extends State<Rhenum> {
   TextEditingController diastolicController = TextEditingController();
   TextEditingController systolicController = TextEditingController();
 
-  _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: date,
@@ -47,47 +47,62 @@ class _Rhenum extends State<Rhenum> {
     late double currentHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
       theme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.light,
         useMaterial3: true,
-        brightness: Brightness.dark,
-        // useMaterial3: true,
-        // colorSchemeSeed: const Color(0xFF2d2e32),
-        textTheme: GoogleFonts.openSansTextTheme().copyWith(
-            displayMedium: const TextStyle(
-                color: Color(0xFFc4c7c5), fontWeight: FontWeight.w400)),
-        // labelLarge : const TextStyle(
-        //   color: Color(0xFFc4c7c5),
-        // ),
-        scaffoldBackgroundColor: const Color(0xFF1f1f1f),
-        appBarTheme: AppBarTheme(
-          backgroundColor: const Color(0xFF1f1f1f),
-          titleTextStyle: GoogleFonts.openSans(
-            color: const Color(0xFFc4c7c5),
-            fontWeight: FontWeight.w400,
-            fontSize: 23,
-          ),
-        ),
-        navigationBarTheme: NavigationBarThemeData(
-          // foregroundColor: const Color(0xFFc5c7c4),
-          backgroundColor: const Color(0xFF2d2e32),
-          indicatorColor: const Color(0xFF004a77),
-          // iconTheme: IconThemeData(color: Colour(0xFFc5c7c4)),
-          labelTextStyle: MaterialStateProperty.all(
-            GoogleFonts.openSans(
-              fontSize: 13,
-              color: Color(0xFFc4c7c5),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xFFa8c8fb),
-          foregroundColor: Color(0xFF043445),
-        ),
-        scrollbarTheme: ScrollbarThemeData(
-          thumbColor: MaterialStateProperty.all(const Color(0xFF2d2f33)),
-          // isAlwaysShown: true,
-        ),
+          textTheme: GoogleFonts.openSansTextTheme()
       ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.dark,
+        useMaterial3: true,
+          textTheme: GoogleFonts.openSansTextTheme()
+      ),
+      // theme: ThemeData(
+      //   useMaterial3: true,
+      //   brightness: Brightness.dark,
+      //   // colorSchemeSeed: const Color(0xFF2d2e32),
+      //   // textTheme: GoogleFonts.openSansTextTheme().copyWith(
+      //   //     displaySmall: const TextStyle(color: Color(0xFFc4c7c5), fontWeight: FontWeight.w400),
+      //   //     labelLarge: const TextStyle(color: Color(0xFFc4c7c5))
+      //   // ),
+      //
+      //
+      //
+      //   // labelLarge : const TextStyle(
+      //   //   color: Color(0xFFc4c7c5),
+      //   // ),
+      //   scaffoldBackgroundColor: const Color(0xFF1f1f1f),
+      //   appBarTheme: AppBarTheme(
+      //     backgroundColor: const Color(0xFF1f1f1f),
+      //     titleTextStyle: GoogleFonts.openSans(
+      //       color: const Color(0xFFc4c7c5),
+      //       fontWeight: FontWeight.w400,
+      //       fontSize: 23,
+      //     ),
+      //   ),
+      //   navigationBarTheme: NavigationBarThemeData(
+      //     // foregroundColor: const Color(0xFFc5c7c4),
+      //     backgroundColor: const Color(0xFF2d2e32),
+      //     indicatorColor: const Color(0xFF004a77),
+      //     // iconTheme: IconThemeData(color: Colour(0xFFc5c7c4)),
+      //     labelTextStyle: MaterialStateProperty.all(
+      //       GoogleFonts.openSans(
+      //         fontSize: 13,
+      //         color: const Color(0xFFc4c7c5),
+      //         fontWeight: FontWeight.w500,
+      //       ),
+      //     ),
+      //   ),
+      //   floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      //     backgroundColor: Color(0xFFa8c8fb),
+      //     foregroundColor: Color(0xFF043445),
+      //   ),
+      //   scrollbarTheme: ScrollbarThemeData(
+      //     thumbColor: MaterialStateProperty.all(const Color(0xFF2d2f33)),
+      //     // isAlwaysShown: true,
+      //   ),
+      // ),
       home: Scaffold(
         key: scaffoldKey,
         body: [
@@ -131,7 +146,76 @@ class _Rhenum extends State<Rhenum> {
               : MediaQuery.of(context).size.width * 3 / 4,
           child: Drawer(
             child: Column(
-              children: <Widget>[],
+                children: <Widget>[
+                  SizedBox(
+                    // Use drawer width to determine drawer header size
+                    height: MediaQuery.of(context).size.width * 3 / 4 > 280
+                        ? 280 * 1.1
+                        : MediaQuery.of(context).size.width * 3 / 4 *1.1,
+                    child: DrawerHeader(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // Profile picture of user
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.width * 3 / 4 > 280
+                                  ? 280 / 2
+                                  : MediaQuery.of(context).size.width * 3 / 4 / 2,
+                              width: MediaQuery.of(context).size.width * 3 / 4 > 280
+                                  ? 280 / 2
+                                  : MediaQuery.of(context).size.width * 3 / 4 / 2,
+                              child: const FlutterLogo(
+                                // size: 300,
+                                textColor: Colors.blue,
+                                style: FlutterLogoStyle.stacked,
+                              ),
+                            ),
+                          ),
+                          // Name of user
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "Aadarsh",
+                              style: Theme.of(context).textTheme.displaySmall,
+                            ),
+                          ),
+                          // Email ID of user
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "aadarshmadankollan@gmail.com",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  // For logging out
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text("Log out"),
+                    onTap: () async {
+
+                    },
+                  ),
+                  // For showing the log file
+                  ListTile(
+                    leading: const Icon(Icons.insert_drive_file_outlined),
+                    title: const Text("Access file"),
+                    onTap: () async {},
+                  ),
+                  // For opening the support page
+                  ListTile(
+                    leading: const Icon(Icons.contact_support_outlined),
+                    title: const Text("Get support"),
+                    onTap: () async {}
+                  ),
+
+                ],
             ),
           ),
         ),
@@ -169,18 +253,23 @@ class _Rhenum extends State<Rhenum> {
         // return object of type Dialog
         return AlertDialog(
             backgroundColor: const Color(0xFF323337),
-            title: const Text("New Sugar Record", style: TextStyle(color: Color(0xFFc4c7c5), fontSize: 13)),
+            title: Text("New Sugar Record", style: Theme.of(context).textTheme.labelLarge),
             actions: <Widget>[
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      sugarController.clear();
                     },
-                    child: Text('Cancel', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)),
+                    child: Text('Cancel',
+                      // style: GoogleFonts.openSans(
+                        // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+
+                    )),
                 TextButton(
                     onPressed: () {
                       if (formKey.currentState != null &&
                           formKey.currentState!.validate()) {
-                        Navigator.of(context).pop(SItem(
+                          Navigator.of(context).pop(SItem(
                           int.parse(sugarController.text),
                           date: date,
                         ));
@@ -188,8 +277,13 @@ class _Rhenum extends State<Rhenum> {
                               int.parse(sugarController.text),
                             )));
                       }
+                      sugarController.clear();
                     },
-                    child: Text('OK', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)
+                    child: Text('OK',
+                      // style: GoogleFonts.openSans(
+                        // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+                    // ),
+                  )
                 )
               ],
             content: SingleChildScrollView(
@@ -210,7 +304,10 @@ class _Rhenum extends State<Rhenum> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   DateFormat("d/M/y").format(date),
-                                    style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400))
+                                    // style: GoogleFonts.openSans(
+                                    //     // textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400)
+                                    // )
+                                    style: Theme.of(context).textTheme.displaySmall
                                 ),
                               ),
                               IconButton(
@@ -218,7 +315,7 @@ class _Rhenum extends State<Rhenum> {
                                 iconSize: 30.0,
                                 tooltip: "Edit date",
                                 color: const Color(0xFFc4c7c5),
-                                onPressed: () => _selectDate(context),
+                                onPressed: () async  => await _selectDate(context),
                               ),
                             ],
                           ),
@@ -246,7 +343,7 @@ class _Rhenum extends State<Rhenum> {
                             ),
 
                             hintText: 'Sugar (in Hz)',
-                            hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                            // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
                           ),
                         ),
                         // Padding(
@@ -295,13 +392,22 @@ class _Rhenum extends State<Rhenum> {
         // return object of type Dialog
         return AlertDialog(
             backgroundColor: const Color(0xFF323337),
-            title: const Text("New BP Record", style: TextStyle(color: Color(0xFFc4c7c5), fontSize: 13)),
+            title: Text("New BP Record",
+                // style: TextStyle(color: Color(0xFFc4c7c5), fontSize: 13)
+                style: Theme.of(context).textTheme.labelLarge
+            ),
             actions: <Widget>[
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    systolicController.clear();
+                    diastolicController.clear();
                   },
-                  child: Text('Cancel', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)),
+                  child: Text('Cancel',
+                    // style: GoogleFonts.openSans(
+                      // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+                  // )
+                  )),
               TextButton(
                   onPressed: () {
                     if (formKey.currentState != null &&
@@ -317,8 +423,15 @@ class _Rhenum extends State<Rhenum> {
                       int.parse(
                         diastolicController.text),
                         date)));
-                      }},
-                  child: Text('OK', style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFa8c8fb))),)),
+                      }
+                    systolicController.clear();
+                    diastolicController.clear();
+                    },
+                  child: Text('OK',
+                    // style: GoogleFonts.openSans(
+                      // textStyle: const TextStyle(color: Color(0xFFa8c8fb))
+                  // ),
+                  )),
             ],
             content: SingleChildScrollView(
               child: Column(
@@ -338,7 +451,10 @@ class _Rhenum extends State<Rhenum> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                     DateFormat("d/M/y").format(date),
-                                    style: GoogleFonts.openSans(textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400))
+                                    // style: GoogleFonts.openSans(
+                                    //     // textStyle: const TextStyle(color: Color(0xFFc4c7c5), fontSize: 48, fontWeight: FontWeight.w400)
+                                    // )
+                                    style: Theme.of(context).textTheme.displaySmall
                                 ),
                               ),
                               IconButton(
@@ -373,7 +489,7 @@ class _Rhenum extends State<Rhenum> {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               hintText: 'Systolic (in mmHg)',
-                                hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                                // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
                             ),
                           ),
                         ),
@@ -401,7 +517,7 @@ class _Rhenum extends State<Rhenum> {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               hintText: 'Diastolic (in mmHg)',
-                                hintStyle: TextStyle(color: Color(0xFFc4c7c5))
+                                // hintStyle: TextStyle(color: Color(0xFFc4c7c5))
                             ),
                           ),
                         ),
